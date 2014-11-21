@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.utad.baccus.R;
-import com.utad.baccus.model.Winehouse;
 
 public class SettingsActivity extends FragmentActivity {
 
