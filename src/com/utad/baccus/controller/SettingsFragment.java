@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 import com.utad.baccus.R;
 
 public class SettingsFragment extends Fragment implements OnClickListener {
-	private View root = null;
+	//private View root = null;
 
 	public static final String OPTION_SELECTED = "com.utad.baccus.OPTION_SELECTED";
 	public static final int OPTION_NORMAL = 0;
@@ -33,9 +33,9 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 			defecto = savedInstanceState
 					.getInt(SettingsFragment.OPTION_SELECTED);
 		} else
-			defecto = SettingsFragment.OPTION_NORMAL;
+			defecto = SettingsFragment.OPTION_FIT;
 
-		root = inflater.inflate(R.layout.fragment_settings, container, false);
+		View root = inflater.inflate(R.layout.fragment_settings, container, false);
 		mRadios = (RadioGroup) root.findViewById(R.id.radio_options);
 		int cual;
 
