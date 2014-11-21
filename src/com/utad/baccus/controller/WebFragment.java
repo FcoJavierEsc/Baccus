@@ -26,7 +26,7 @@ public class WebFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		View root = inflater.inflate(R.layout.fragment_web, container, false);

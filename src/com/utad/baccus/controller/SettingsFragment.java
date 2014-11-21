@@ -8,32 +8,52 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.utad.baccus.R;
 
-public class SettingFragment extends Fragment implements OnClickListener {
-	private View root=null;
-	
-	public static final String OPTION_SELECTED = "OPTION_SELECTED";
+public class SettingsFragment extends Fragment implements OnClickListener {
+	private View root = null;
+
+	public static final String OPTION_SELECTED = "com.utad.baccus.OPTION_SELECTED";
 	public static final int OPTION_NORMAL = 0;
 	public static final int OPTION_FIT = 1;
+	private RadioGroup mRadios = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		int defecto;
+
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		 root = inflater.inflate(R.layout.fragment_settings, container,
-				false);
+		if (savedInstanceState != null) {
+			defecto = savedInstanceState
+					.getInt(SettingsFragment.OPTION_SELECTED);
+		} else
+			defecto = SettingsFragment.OPTION_NORMAL;
 
-		Button cancelButton = (Button) root.findViewById(R.id.cancel_button);
-		Button saveButton = (Button) root.findViewById(R.id.save_button);
+		root = inflater.inflate(R.layout.fragment_settings, container, false);
+		mRadios = (RadioGroup) root.findViewById(R.id.radio_options);
+		int cual;
 
-		return inflater.inflate(R.layout.fragment_settings, container, false);
+		switch (defecto) {
+		case SettingsFragment.OPTION_FIT:
+			cual = R.id.radio_fit;
+			break;
+		case SettingsFragment.OPTION_NORMAL:
+			cual = R.id.radio_normal;
+			break;
+		default:
+			cual = R.id.radio_normal;
+		}
 
+		RadioButton rButton = (RadioButton) root.findViewById(cual);
+		rButton.setChecked(true);
+
+		return root;
 	}
 
 	@Override
@@ -59,13 +79,13 @@ public class SettingFragment extends Fragment implements OnClickListener {
 	public void save() {
 		Activity act = getActivity();
 		Intent intent = act.getIntent();
-		RadioGroup radios = (RadioGroup) root.findViewById(R.id.radio_options);
-		if (radios.getCheckedRadioButtonId() == R.id.radio_normal) {
+
+		if (mRadios.getCheckedRadioButtonId() == R.id.radio_normal) {
 			intent.putExtra(OPTION_SELECTED, OPTION_NORMAL);
 		} else {
 			intent.putExtra(OPTION_SELECTED, OPTION_FIT);
 		}
-		act.setResult(act.RESULT_OK, intent);
+		act.setResult(Activity.RESULT_OK, intent);
 
 		act.finish();
 	}

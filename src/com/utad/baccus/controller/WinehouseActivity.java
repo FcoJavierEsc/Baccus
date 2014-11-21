@@ -1,11 +1,8 @@
 package com.utad.baccus.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.utad.baccus.R;
@@ -18,23 +15,23 @@ public class WinehouseActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_winehouse);
-		
+
 		FragmentTabHost tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-		tabHost.setup(this,getSupportFragmentManager(),android.R.id.tabcontent);
+		tabHost.setup(this, getSupportFragmentManager(),
+				android.R.id.tabcontent);
 		Winehouse winehouse = Winehouse.getInstance();
 		for (int i = 0; i < winehouse.getWineCount(); i++) {
-			WineFragment fragment = new  WineFragment();
-			
+
 			Bundle argumentos = new Bundle();
-			
+
 			Wine currentWine = winehouse.getWine(i);
 			argumentos.putSerializable(WineFragment.ARGS_WINE, currentWine);
-			
+
 			TabSpec tabWine = tabHost.newTabSpec(currentWine.getName());
 			tabWine.setIndicator(currentWine.getName());
-			
-			
-			tabHost.addTab(tabWine,WineFragment.class,argumentos);
+
+			tabHost.addTab(tabWine, WineFragment.class, argumentos);
+
 		}
 	}
 

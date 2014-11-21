@@ -1,19 +1,15 @@
 package com.utad.baccus.controller;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.webkit.WebView;
 
 import com.utad.baccus.R;
 
 public class WebActivity extends ActionBarActivity {
 	public static final String EXTRA_URL = "com.utad.baccus.controller.EXTRA_URL";
 
-	private static final String CURRENT_URL = "CURRENT_URL";
-	private static final int MENU_RELOAD = 0;
+//	private static final String CURRENT_URL = "CURRENT_URL";
+//	private static final int MENU_RELOAD = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

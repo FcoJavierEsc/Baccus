@@ -27,22 +27,17 @@ public class WineFragment extends Fragment {
 	private Wine mWine = null;
 	private ImageView mWineImage = null;
 
-	private View root = null;
-	
+	//private View root = null;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
-
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		View root = inflater.inflate(R.layout.fragment_wine, container, false);
@@ -80,65 +75,59 @@ public class WineFragment extends Fragment {
 
 		RatingBar ratingBar = (RatingBar) root.findViewById(R.id.rating);
 		ratingBar.setProgress(mWine.getRating());
-  
-		Button webButton = (Button)root.findViewById(R.id.web_button);
-		
+
+		Button webButton = (Button) root.findViewById(R.id.web_button);
+
 		webButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-	    		Intent webIntent = new Intent(getActivity(), WebActivity.class);
-	    		webIntent.putExtra(WebActivity.EXTRA_URL, mWine.getURL());
-	    		startActivity(webIntent);				
+				Intent webIntent = new Intent(getActivity(), WebActivity.class);
+				webIntent.putExtra(WebActivity.EXTRA_URL, mWine.getURL());
+				startActivity(webIntent);
 			}
 		});
-		
-		
+
 		return root;
 	}
-	
-    
-    
-    @Override
-	public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu,inflater);
-		inflater.inflate(R.menu.main, menu);		
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.main, menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean defaultValue = super.onOptionsItemSelected(item);
-		
-		if (item.getItemId() == R.id.action_settings) {
-			Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
-			startActivityForResult(settingsIntent, SettingsActivity.REQUEST_SELECT_SCALETYPE);
-			return true;
-		}
-		else {
-			return defaultValue;
-		}
-	}
 
+		if (item.getItemId() == R.id.action_settings) {
+			Intent settingsIntent = new Intent(getActivity(),
+					SettingsActivity.class);
+			startActivityForResult(settingsIntent,
+					SettingsActivity.REQUEST_SELECT_SCALETYPE);
+			defaultValue = true;
+		}
+		return defaultValue;
+	}
 
 	@Override
 	public void onActivityResult(int requestCode, int result, Intent intent) {
 		super.onActivityResult(requestCode, result, intent);
-		
-		ImageView mWineImage = (ImageView)root.findViewById(R.id.wine_image);
-		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALETYPE
-				&& result == Activity.RESULT_OK) {
-			int optionSelected = intent.getIntExtra(SettingFragment.OPTION_SELECTED, -1); 
-			if (optionSelected != -1 && optionSelected == SettingFragment.OPTION_NORMAL) {
-				// A la imagen le doy un scale type normal
-				mWineImage.setScaleType(ScaleType.FIT_CENTER);
-			}
-			else if (optionSelected != -1 && optionSelected == SettingFragment.OPTION_FIT) {
-				// A la imagen le doy un scale type estirado
-				mWineImage.setScaleType(ScaleType.FIT_XY);
+
+		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALETYPE) {
+			if (result == Activity.RESULT_OK) {
+				switch (intent
+						.getIntExtra(SettingsFragment.OPTION_SELECTED, -1)) {
+				case SettingsFragment.OPTION_NORMAL:
+					mWineImage.setScaleType(ScaleType.FIT_CENTER);
+					break;
+				case SettingsFragment.OPTION_FIT:
+					mWineImage.setScaleType(ScaleType.FIT_XY);
+					break;
+				}
+
 			}
 		}
 	}
 }
-
-
-
