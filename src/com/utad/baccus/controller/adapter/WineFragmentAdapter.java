@@ -34,6 +34,15 @@ public class WineFragmentAdapter extends FragmentPagerAdapter {
 		return mWines.getWineCount();
 	}
 
+
+
+	@Override
+	public CharSequence getPageTitle(int position) {
+
+		 super.getPageTitle(position);
+		 return mWines.getWine(position).getName();
+	}
+
 	
 	
 }
