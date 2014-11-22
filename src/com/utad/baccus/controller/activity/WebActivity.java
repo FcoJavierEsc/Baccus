@@ -2,7 +2,9 @@ package com.utad.baccus.controller.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.fragment.WebFragment;
@@ -29,7 +31,25 @@ public class WebActivity extends ActionBarActivity {
 
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.fragment_placeholder, fragment).commit();
-
+			
+			ActionBar actionBar = getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		boolean def= super.onOptionsItemSelected(item);
+		
+		if (item.getItemId( )==android.R.id.home){
+			finish();
+			return true;		
+		}
+		else{
+			return def;
+		}
+	}
+	
+	
 }
