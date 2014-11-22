@@ -38,6 +38,14 @@ public class Wine implements Serializable {
 	}
 	
 	
+	
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getName();
+	}
+
 	public String getName() {
 		return mName;
 	}

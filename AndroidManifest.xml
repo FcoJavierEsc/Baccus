@@ -28,14 +28,20 @@
             android:name="com.utad.baccus.controller.activity.SettingsActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name="com.utad.baccus.controller.activity.WinehouseActivity"
+          <activity
+            android:name="com.utad.baccus.controller.activity.WineListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name="com.utad.baccus.controller.activity.WinehouseActivity"
+            android:label="@string/app_name" >
+       
 
             <meta-data
                 android:name="android.suppert.UI_OPTIONS"
