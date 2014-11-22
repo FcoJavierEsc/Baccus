@@ -15,23 +15,23 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".controller.WineActivity"
+            android:name=".fragment.WineActivity"
             android:label="@string/app_name" >
         </activity>
         
         <activity
-            android:name="com.utad.baccus.controller.WebActivity"
+            android:name="com.utad.baccus.controller.activity.WebActivity"
             android:label="@string/app_name" 
             android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         
         <activity
-            android:name="com.utad.baccus.controller.SettingsActivity"
+            android:name="com.utad.baccus.controller.activity.SettingsActivity"
             android:label="@string/app_name" >
         </activity>
         
         <activity
-            android:name="com.utad.baccus.controller.WinehouseActivity"
+            android:name="com.utad.baccus.controller.activity.WinehouseActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

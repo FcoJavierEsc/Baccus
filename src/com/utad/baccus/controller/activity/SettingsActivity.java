@@ -1,4 +1,4 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.utad.baccus.R;
+import com.utad.baccus.controller.fragment.SettingsFragment;
 
 public class SettingsActivity extends FragmentActivity {
 

@@ -1,10 +1,11 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 
 import com.utad.baccus.R;
+import com.utad.baccus.controller.fragment.WebFragment;
 
 public class WebActivity extends ActionBarActivity {
 	public static final String EXTRA_URL = "com.utad.baccus.controller.EXTRA_URL";

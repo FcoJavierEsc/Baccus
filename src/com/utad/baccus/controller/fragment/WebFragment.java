@@ -1,4 +1,4 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.fragment;
 
 import com.utad.baccus.R;
 

@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#FF0066"
     android:orientation="vertical"
-    tools:context="com.utad.baccus.controller.WineActivity" >
+    tools:context="com.utad.baccus.controller.activity.WineActivity" >
     
     <LinearLayout
         android:layout_width="match_parent"

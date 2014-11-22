@@ -1,4 +1,4 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.fragment;
 
 import android.app.Activity;
 import android.content.Intent;

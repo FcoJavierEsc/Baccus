@@ -1,4 +1,4 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +20,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.utad.baccus.R;
+import com.utad.baccus.controller.activity.SettingsActivity;
+import com.utad.baccus.controller.activity.WebActivity;
 import com.utad.baccus.model.Wine;
 
 public class WineFragment extends Fragment {
