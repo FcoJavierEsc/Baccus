@@ -43,6 +43,8 @@ public class WineFragmentAdapter extends FragmentPagerAdapter {
 		 return mWines.getWine(position).getName();
 	}
 
-	
+	public int getImageResource(int index){
+		return mWines.getWine(index).getImage();
+	}
 	
 }
