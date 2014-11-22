@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -38,6 +39,12 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 		View root = inflater.inflate(R.layout.fragment_settings, container, false);
 		mRadios = (RadioGroup) root.findViewById(R.id.radio_options);
 		int cual;
+		
+		Button cancelButton = (Button) root.findViewById(R.id.cancel_button);
+		Button saveButton = (Button) root.findViewById(R.id.save_button);
+		
+		cancelButton.setOnClickListener(this);
+		saveButton.setOnClickListener(this);
 
 		switch (defecto) {
 		case SettingsFragment.OPTION_FIT:

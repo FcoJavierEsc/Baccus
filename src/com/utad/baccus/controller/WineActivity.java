@@ -1,5 +1,6 @@
 package com.utad.baccus.controller;
 
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -13,15 +14,18 @@ public class WineActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragment_container);
 
-		WineFragment fragment = new WineFragment();
+		FragmentManager manager = getSupportFragmentManager();
 
-		Bundle arguments = new Bundle();
-		arguments.putSerializable(WineFragment.ARGS_WINE, getIntent()
-				.getSerializableExtra(EXTRA_WINE));
+		if (manager.findFragmentById(R.id.fragment_placeholder) == null) {
+			WineFragment fragment = new WineFragment();
+			Bundle arguments = new Bundle();
+			arguments.putSerializable(WineFragment.ARGS_WINE, getIntent()
+					.getSerializableExtra(EXTRA_WINE));
 
-		fragment.setArguments(arguments);
+			fragment.setArguments(arguments);
 
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.fragment_placeholder, fragment).commit();
+			manager.beginTransaction().add(R.id.fragment_placeholder, fragment)
+					.commit();
+		}
 	}
 }

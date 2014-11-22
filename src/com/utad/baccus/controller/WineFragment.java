@@ -24,10 +24,12 @@ import com.utad.baccus.model.Wine;
 
 public class WineFragment extends Fragment {
 	public static final String ARGS_WINE = "com.utad.baccus.controller.WineFragment.arg_wine";
+	public static final String CURRENT_STYLE_TYPE = "com.utad.baccus.controller.WineFragment.arg_currentsytletype";
 	private Wine mWine = null;
 	private ImageView mWineImage = null;
 
 	private int mTypeScale = -1;
+
 	// private View root = null;
 
 	@Override
@@ -41,10 +43,10 @@ public class WineFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		if (savedInstanceState==null){
+		if (savedInstanceState == null) {
 			mTypeScale = SettingsFragment.OPTION_NORMAL;
 		}
-		
+
 		View root = inflater.inflate(R.layout.fragment_wine, container, false);
 
 		mWine = (Wine) getArguments().getSerializable(ARGS_WINE);
@@ -63,7 +65,12 @@ public class WineFragment extends Fragment {
 
 		mWineImage = (ImageView) root.findViewById(R.id.wine_image);
 		mWineImage.setImageResource(mWine.getImage());
-
+		if (savedInstanceState != null) {
+			if (savedInstanceState.containsKey(CURRENT_STYLE_TYPE)) {
+				mWineImage.setScaleType((ScaleType) savedInstanceState
+						.getSerializable(CURRENT_STYLE_TYPE));
+			}
+		}
 		// Vamos a crear los textos de las uvas
 		LinearLayout grapesContainer = (LinearLayout) root
 				.findViewById(R.id.grapes);
@@ -110,7 +117,8 @@ public class WineFragment extends Fragment {
 		case R.id.action_settings:
 			Intent settingsIntent = new Intent(getActivity(),
 					SettingsActivity.class);
-			settingsIntent.putExtra(SettingsFragment.OPTION_SELECTED, mTypeScale);
+			settingsIntent.putExtra(SettingsFragment.OPTION_SELECTED,
+					mTypeScale);
 			startActivityForResult(settingsIntent,
 					SettingsActivity.REQUEST_SELECT_SCALETYPE);
 			defaultValue = true;
@@ -126,7 +134,8 @@ public class WineFragment extends Fragment {
 
 		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALETYPE) {
 			if (result == Activity.RESULT_OK) {
-				mTypeScale = intent.getIntExtra(SettingsFragment.OPTION_SELECTED, mTypeScale);
+				mTypeScale = intent.getIntExtra(
+						SettingsFragment.OPTION_SELECTED, mTypeScale);
 				switch (mTypeScale) {
 				case SettingsFragment.OPTION_NORMAL:
 					mWineImage.setScaleType(ScaleType.FIT_CENTER);
@@ -138,4 +147,12 @@ public class WineFragment extends Fragment {
 			}
 		}
 	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(CURRENT_STYLE_TYPE, mWineImage.getScaleType());
+	}
+
 }

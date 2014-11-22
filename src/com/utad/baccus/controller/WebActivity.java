@@ -1,6 +1,7 @@
 package com.utad.baccus.controller;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 
 import com.utad.baccus.R;
@@ -11,20 +12,23 @@ public class WebActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		WebFragment fragment = new WebFragment();
 
 		setContentView(R.layout.activity_fragment_container);
 		// setContentView(R.layout.fragment_web);
 
-		Bundle arguments = new Bundle();
-		arguments.putSerializable(WebFragment.ARGS_URL, getIntent()
-				.getSerializableExtra(EXTRA_URL));
+		FragmentManager manager = getSupportFragmentManager();
 
-		fragment.setArguments(arguments);
+		if (manager.findFragmentById(R.id.fragment_placeholder) == null) {
+			WebFragment fragment = new WebFragment();
+			Bundle arguments = new Bundle();
+			arguments.putSerializable(WebFragment.ARGS_URL, getIntent()
+					.getSerializableExtra(EXTRA_URL));
 
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.fragment_placeholder, fragment).commit();
+			fragment.setArguments(arguments);
 
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.fragment_placeholder, fragment).commit();
+
+		}
 	}
-
 }
