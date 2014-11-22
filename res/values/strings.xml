@@ -10,5 +10,7 @@
     <string name="grapes_list_header">Lista de uvas</string>
     <string name="reload">Recargar</string>
     <string name="web">Web</string>
+    <string name="action_settings_next">Siguiente</string>
+    <string name="action_settings_before">Anterior</string>
 
 </resources>
