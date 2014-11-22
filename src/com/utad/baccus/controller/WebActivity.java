@@ -8,9 +8,6 @@ import com.utad.baccus.R;
 public class WebActivity extends ActionBarActivity {
 	public static final String EXTRA_URL = "com.utad.baccus.controller.EXTRA_URL";
 
-//	private static final String CURRENT_URL = "CURRENT_URL";
-//	private static final int MENU_RELOAD = 0;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,6 +26,5 @@ public class WebActivity extends ActionBarActivity {
 				.add(R.id.fragment_placeholder, fragment).commit();
 
 	}
-
 
 }

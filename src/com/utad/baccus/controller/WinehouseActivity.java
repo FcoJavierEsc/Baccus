@@ -14,6 +14,7 @@ public class WinehouseActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_winehouse);
 
 		FragmentTabHost tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);

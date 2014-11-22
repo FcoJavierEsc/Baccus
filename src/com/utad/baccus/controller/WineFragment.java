@@ -14,10 +14,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.ImageView.ScaleType;
 
 import com.utad.baccus.R;
 import com.utad.baccus.model.Wine;
@@ -27,7 +27,8 @@ public class WineFragment extends Fragment {
 	private Wine mWine = null;
 	private ImageView mWineImage = null;
 
-	//private View root = null;
+	private int mTypeScale = -1;
+	// private View root = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,10 @@ public class WineFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
+		if (savedInstanceState==null){
+			mTypeScale = SettingsFragment.OPTION_NORMAL;
+		}
+		
 		View root = inflater.inflate(R.layout.fragment_wine, container, false);
 
 		mWine = (Wine) getArguments().getSerializable(ARGS_WINE);
@@ -101,13 +106,17 @@ public class WineFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean defaultValue = super.onOptionsItemSelected(item);
 
-		if (item.getItemId() == R.id.action_settings) {
+		switch (item.getItemId()) {
+		case R.id.action_settings:
 			Intent settingsIntent = new Intent(getActivity(),
 					SettingsActivity.class);
+			settingsIntent.putExtra(SettingsFragment.OPTION_SELECTED, mTypeScale);
 			startActivityForResult(settingsIntent,
 					SettingsActivity.REQUEST_SELECT_SCALETYPE);
 			defaultValue = true;
+			break;
 		}
+
 		return defaultValue;
 	}
 
@@ -117,8 +126,8 @@ public class WineFragment extends Fragment {
 
 		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALETYPE) {
 			if (result == Activity.RESULT_OK) {
-				switch (intent
-						.getIntExtra(SettingsFragment.OPTION_SELECTED, -1)) {
+				mTypeScale = intent.getIntExtra(SettingsFragment.OPTION_SELECTED, mTypeScale);
+				switch (mTypeScale) {
 				case SettingsFragment.OPTION_NORMAL:
 					mWineImage.setScaleType(ScaleType.FIT_CENTER);
 					break;
@@ -126,7 +135,6 @@ public class WineFragment extends Fragment {
 					mWineImage.setScaleType(ScaleType.FIT_XY);
 					break;
 				}
-
 			}
 		}
 	}
