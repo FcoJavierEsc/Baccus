@@ -16,9 +16,10 @@ import android.view.MenuItem;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.adapter.WineFragmentAdapter;
-import com.utad.baccus.controller.fragment.SettingsFragment;
 
 public class WinehouseActivity extends ActionBarActivity {
+	
+	public static final String  SELECT_WINE_INDEX = "com.utad.baccus.SELECT_WINE_INDEX";
 	private WineFragmentAdapter mAdapter = null;
 	private ActionBar mActionBar = null;
 	private MenuItem befItem;
@@ -81,8 +82,8 @@ public class WinehouseActivity extends ActionBarActivity {
 			mActionBar.addTab(tab);
 
 		}
-
-		updateActionBar(0);
+		
+		updateActionBar(getIntent().getIntExtra(SELECT_WINE_INDEX, 0));
 
 	}
 
