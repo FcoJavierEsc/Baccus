@@ -152,7 +152,6 @@ public class WineFragment extends Fragment {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		if (mWineImage != null) {
 			outState.putSerializable(CURRENT_STYLE_TYPE,
