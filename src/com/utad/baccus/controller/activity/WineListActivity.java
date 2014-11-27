@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 
 import com.utad.baccus.R;
-import com.utad.baccus.controller.fragment.WineHouseAFragment;
+import com.utad.baccus.controller.fragment.WineHouseFragment;
 import com.utad.baccus.controller.fragment.WineListFragment;
 
 public class WineListActivity extends ActionBarActivity {
@@ -29,11 +29,11 @@ public class WineListActivity extends ActionBarActivity {
 		}
 		if (findViewById(R.id.winehouse_fragment) != null) {
 			if (manager.findFragmentById(R.id.winehouse_fragment) == null) {
-				WineHouseAFragment fragment = new WineHouseAFragment();
-				Bundle arg = new Bundle();
-				arg.putInt(WineHouseAFragment.SELECT_WINE_INDEX, 0);
-
-				fragment.setArguments(arg);
+				WineHouseFragment fragment = new WineHouseFragment();
+				Bundle args = new Bundle();
+				args.putInt(WineHouseFragment.SELECT_WINE_INDEX, 0);
+				fragment.setArguments(args);
+				
 				manager.beginTransaction().add(R.id.winehouse_fragment, fragment)
 						.commit();
 
