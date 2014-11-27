@@ -154,7 +154,10 @@ public class WineFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-		outState.putSerializable(CURRENT_STYLE_TYPE, mWineImage.getScaleType());
+		if (mWineImage != null) {
+			outState.putSerializable(CURRENT_STYLE_TYPE,
+					mWineImage.getScaleType());
+		}
 	}
 
 }
