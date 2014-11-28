@@ -83,12 +83,13 @@ public class WebFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		boolean defaultValue = super.onOptionsItemSelected(item);
-		if (item.getItemId() == MENU_RELOAD) {
+
+		switch (item.getItemId()) {
+		case MENU_RELOAD:
 			mBrowser.reload();
 			return true;
-		} else {
-			return defaultValue;
+		default:
+			return super.onContextItemSelected(item);
 		}
 	}
 

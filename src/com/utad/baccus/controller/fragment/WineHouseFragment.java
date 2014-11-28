@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.adapter.WineFragmentAdapter;
@@ -28,6 +29,7 @@ public class WineHouseFragment extends Fragment {
 	private MenuItem befItem;
 	private MenuItem nextItem;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -52,7 +54,7 @@ public class WineHouseFragment extends Fragment {
 
 			@Override
 			public void onPageSelected(int index) {
-				updateActionBar(index);
+				updateActionBarViewPager(index);
 			}
 
 			@Override
@@ -61,7 +63,10 @@ public class WineHouseFragment extends Fragment {
 			@Override
 			public void onPageScrollStateChanged(int arg0) {}
 		});
-
+		
+		int position =getActivity().getIntent().getIntExtra(SELECT_WINE_INDEX, 0);
+		Toast.makeText(getActivity(), "vino "+position,Toast.LENGTH_SHORT).show();
+        updateActionBarViewPager(position);
 		return root;
 
 	}
@@ -87,35 +92,31 @@ public class WineHouseFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		boolean defaultValue = super.onOptionsItemSelected(item);
 		int actIndex = mViewPager.getCurrentItem();
 
 		switch (item.getItemId()) {
 		case R.id.action_next:
-			if (actIndex + 1 < mAdapter.getCount()) {
-				updateActionBar(actIndex + 1);
-				mViewPager.setCurrentItem(actIndex + 1);
-			}
-			break;
+			if (actIndex + 1 < mAdapter.getCount()) 
+				updateActionBarViewPager(actIndex + 1);			
+			return true;
 			
 		case android.R.id.home:
 			getActivity().finish();
 			return true;
 			
 		case R.id.action_before:
-			if (actIndex > 0) {
-				updateActionBar(actIndex - 1);
-				mViewPager.setCurrentItem(actIndex - 1);
-			}
-			break;
-
+			if (actIndex > 0) 
+				updateActionBarViewPager(actIndex - 1);
+			
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-
-		return defaultValue;
 	}
 
-	private void updateActionBar(int index) {
+	private void updateActionBarViewPager(int index) {
 		mActionBar.setSubtitle(mAdapter.getPageTitle(index));
 		mActionBar.setIcon(mAdapter.getImageResource(index));
+		mViewPager.setCurrentItem(index);
 	}
 }

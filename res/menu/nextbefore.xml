@@ -5,14 +5,14 @@
     tools:context="com.utad.baccus.MainActivity" >
 
     <item
-        android:id="@+id/action_next"
-        android:orderInCategory="103"
-        android:title="@string/action_settings_next"
-        app:showAsAction="never"/>
-    <item
         android:id="@+id/action_before"
         android:orderInCategory="102"
         android:title="@string/action_settings_before"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_next"
+        android:orderInCategory="103"
+        android:title="@string/action_settings_next"
         app:showAsAction="never"/>
 
 </menu>

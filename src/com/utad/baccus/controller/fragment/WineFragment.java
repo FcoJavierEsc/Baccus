@@ -113,7 +113,6 @@ public class WineFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		boolean defaultValue = super.onOptionsItemSelected(item);
 
 		switch (item.getItemId()) {
 		case R.id.action_settings:
@@ -123,11 +122,11 @@ public class WineFragment extends Fragment {
 					mTypeScale);
 			startActivityForResult(settingsIntent,
 					SettingsActivity.REQUEST_SELECT_SCALETYPE);
-			defaultValue = true;
-			break;
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 
-		return defaultValue;
 	}
 
 	@Override
@@ -136,8 +135,7 @@ public class WineFragment extends Fragment {
 
 		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALETYPE) {
 			if (result == Activity.RESULT_OK) {
-				mTypeScale = intent.getIntExtra(
-						SettingsFragment.OPTION_SELECTED, mTypeScale);
+				mTypeScale = intent.getIntExtra(SettingsFragment.OPTION_SELECTED, mTypeScale);
 				switch (mTypeScale) {
 				case SettingsFragment.OPTION_NORMAL:
 					mWineImage.setScaleType(ScaleType.FIT_CENTER);

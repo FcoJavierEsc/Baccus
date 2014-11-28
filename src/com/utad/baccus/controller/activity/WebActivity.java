@@ -17,21 +17,20 @@ public class WebActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_fragment_container);
-		// setContentView(R.layout.fragment_web);
-
+	
 		FragmentManager manager = getSupportFragmentManager();
 
 		if (manager.findFragmentById(R.id.fragment_placeholder) == null) {
 			WebFragment fragment = new WebFragment();
-			Bundle arguments = new Bundle();
-			arguments.putSerializable(WebFragment.ARGS_URL, getIntent()
-					.getSerializableExtra(EXTRA_URL));
-
-			fragment.setArguments(arguments);
+	
+			Bundle args = new Bundle();
+			args.putSerializable(WebFragment.ARGS_URL, getIntent().getStringExtra(EXTRA_URL));
+				
+			fragment.setArguments(args);
 
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.fragment_placeholder, fragment).commit();
-			
+
 			ActionBar actionBar = getSupportActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
@@ -39,17 +38,14 @@ public class WebActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		boolean def= super.onOptionsItemSelected(item);
-		
-		if (item.getItemId( )==android.R.id.home){
+
+		switch (item.getItemId()) {
+		case android.R.id.home:
 			finish();
-			return true;		
-		}
-		else{
-			return def;
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	
+
 }

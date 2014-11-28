@@ -42,7 +42,8 @@ public class WineListFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Toast.makeText(getActivity(), "vino "+position,Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getActivity(), "vino "+position,Toast.LENGTH_SHORT).show();
+				
 				Intent wineHouseActivityIntent = new Intent(getActivity(), WinehouseActivity.class);
 				wineHouseActivityIntent.putExtra(WinehouseActivity.SELECT_WINE_INDEX, position);
 				startActivity(wineHouseActivityIntent);
