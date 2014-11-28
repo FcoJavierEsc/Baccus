@@ -54,7 +54,7 @@ public class WineHouseFragment extends Fragment {
 
 			@Override
 			public void onPageSelected(int index) {
-				updateActionBarViewPager(index);
+				showWine(index);
 			}
 
 			@Override
@@ -66,11 +66,11 @@ public class WineHouseFragment extends Fragment {
 		
 		int position =getActivity().getIntent().getIntExtra(SELECT_WINE_INDEX, 0);
 		Toast.makeText(getActivity(), "vino "+position,Toast.LENGTH_SHORT).show();
-        updateActionBarViewPager(position);
+        showWine(position);
 		return root;
 
 	}
-
+	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -97,24 +97,20 @@ public class WineHouseFragment extends Fragment {
 		switch (item.getItemId()) {
 		case R.id.action_next:
 			if (actIndex + 1 < mAdapter.getCount()) 
-				updateActionBarViewPager(actIndex + 1);			
+				showWine(actIndex + 1);			
 			return true;
 			
 		case android.R.id.home:
 			getActivity().finish();
 			return true;
 			
-		case R.id.action_before:
-			if (actIndex > 0) 
-				updateActionBarViewPager(actIndex - 1);
-			
-			return true;
+		
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void updateActionBarViewPager(int index) {
+	public void showWine(int index) {
 		mActionBar.setSubtitle(mAdapter.getPageTitle(index));
 		mActionBar.setIcon(mAdapter.getImageResource(index));
 		mViewPager.setCurrentItem(index);
