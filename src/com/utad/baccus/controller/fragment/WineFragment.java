@@ -143,12 +143,9 @@ public class WineFragment extends Fragment {
 
 		switch (item.getItemId()) {
 		case R.id.action_settings:
-			Intent settingsIntent = new Intent(getActivity(),
-					SettingsActivity.class);
-			settingsIntent.putExtra(SettingsFragment.OPTION_SELECTED,
-					mTypeScale);
-			startActivityForResult(settingsIntent,
-					SettingsActivity.REQUEST_SELECT_SCALETYPE);
+			SettingsFragment dialog = new SettingsFragment();
+			dialog.setTargetFragment(this, SettingsFragment.REQUEST_SELECT_SCALETYPE);
+			dialog.show(getFragmentManager(), null);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -160,7 +157,7 @@ public class WineFragment extends Fragment {
 	public void onActivityResult(int requestCode, int result, Intent intent) {
 		super.onActivityResult(requestCode, result, intent);
 
-		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALETYPE) {
+		if (requestCode == SettingsFragment.REQUEST_SELECT_SCALETYPE) {
 			if (result == Activity.RESULT_OK) {
 				mTypeScale = intent.getIntExtra(
 						SettingsFragment.OPTION_SELECTED, mTypeScale);

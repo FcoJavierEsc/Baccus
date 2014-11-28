@@ -10,7 +10,7 @@ import com.utad.baccus.controller.fragment.SettingsFragment;
 
 public class SettingsActivity extends FragmentActivity {
 
-	public static final int REQUEST_SELECT_SCALETYPE = 0;
+	//public static final int REQUEST_SELECT_SCALETYPE = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
