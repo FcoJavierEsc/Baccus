@@ -1,7 +1,9 @@
 package com.utad.baccus.controller.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.utad.baccus.R;
 import com.utad.baccus.controller.fragment.WineHouseFragment;
 import com.utad.baccus.controller.fragment.WineListFragment;
 import com.utad.baccus.controller.fragment.WineListFragment.OnWineSelectedListener;
+import com.utad.baccus.model.Constans;
 
 public class WineListActivity extends ActionBarActivity implements
 		OnWineSelectedListener {
@@ -44,7 +47,9 @@ public class WineListActivity extends ActionBarActivity implements
 			if (manager.findFragmentById(R.id.winehouse_fragment) == null) {
 				WineHouseFragment fragment = new WineHouseFragment();
 				Bundle args = new Bundle();
-				args.putInt(WineHouseFragment.SELECT_WINE_INDEX, 0);
+				
+				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+				args.putInt(WineHouseFragment.SELECT_WINE_INDEX, pref.getInt(Constans.PREF_LAST_WINE, 0));
 				fragment.setArguments(args);
 				manager.beginTransaction()
 						.add(R.id.winehouse_fragment, fragment).commit();

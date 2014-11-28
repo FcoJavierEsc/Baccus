@@ -1,6 +1,8 @@
 package com.utad.baccus.controller.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -96,9 +98,34 @@ public class WineFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				Intent webIntent = new Intent(getActivity(), WebActivity.class);
-				webIntent.putExtra(WebActivity.EXTRA_URL, mWine.getURL());
-				startActivity(webIntent);
+				AlertDialog.Builder alert = new AlertDialog.Builder(
+						getActivity());
+				alert.setTitle("SEGURO?");
+				alert.setMessage("Ojo que esto no es tuyo");
+				alert.setPositiveButton("tranki",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+								Intent webIntent = new Intent(getActivity(),
+										WebActivity.class);
+								webIntent.putExtra(WebActivity.EXTRA_URL,
+										mWine.getURL());
+								startActivity(webIntent);
+							}
+						});
+				alert.setNegativeButton("acoquinado",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						});
+				alert.show();
 			}
 		});
 
@@ -135,7 +162,8 @@ public class WineFragment extends Fragment {
 
 		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALETYPE) {
 			if (result == Activity.RESULT_OK) {
-				mTypeScale = intent.getIntExtra(SettingsFragment.OPTION_SELECTED, mTypeScale);
+				mTypeScale = intent.getIntExtra(
+						SettingsFragment.OPTION_SELECTED, mTypeScale);
 				switch (mTypeScale) {
 				case SettingsFragment.OPTION_NORMAL:
 					mWineImage.setScaleType(ScaleType.FIT_CENTER);

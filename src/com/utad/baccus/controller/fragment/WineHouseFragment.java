@@ -1,6 +1,10 @@
 package com.utad.baccus.controller.fragment;
 
+import java.io.ObjectInputStream.GetField;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.adapter.WineFragmentAdapter;
+import com.utad.baccus.model.Constans;
 
 public class WineHouseFragment extends Fragment {
 
@@ -29,6 +34,18 @@ public class WineHouseFragment extends Fragment {
 	private MenuItem befItem;
 	private MenuItem nextItem;
 
+	protected void updateActionBarAndSaveLastWine(int index){
+		
+		mActionBar.setSubtitle(mAdapter.getPageTitle(index));
+		mActionBar.setIcon(mAdapter.getImageResource(index));
+		saveLastWine();
+	}
+
+	private void saveLastWine() {
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		
+		pref.edit().putInt(Constans.PREF_LAST_WINE, mViewPager.getCurrentItem()).commit();
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +81,7 @@ public class WineHouseFragment extends Fragment {
 			public void onPageScrollStateChanged(int arg0) {}
 		});
 		
-		int position =getActivity().getIntent().getIntExtra(SELECT_WINE_INDEX, 0);
+		int position =getArguments().getInt(SELECT_WINE_INDEX, 0);
 		Toast.makeText(getActivity(), "vino "+position,Toast.LENGTH_SHORT).show();
         showWine(position);
 		return root;
@@ -111,8 +128,7 @@ public class WineHouseFragment extends Fragment {
 	}
 
 	public void showWine(int index) {
-		mActionBar.setSubtitle(mAdapter.getPageTitle(index));
-		mActionBar.setIcon(mAdapter.getImageResource(index));
+		updateActionBarAndSaveLastWine(index);
 		mViewPager.setCurrentItem(index);
 	}
 }
