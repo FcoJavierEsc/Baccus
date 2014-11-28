@@ -21,36 +21,39 @@ import com.utad.baccus.model.Winehouse;
 public class WineListFragment extends Fragment {
 
 	private ListView mList = null;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-		 super.onCreateView(inflater, container, savedInstanceState);
-		 
-		 View root = inflater.inflate(R.layout.fragment_wine_list, container, false);
-		 
-		 mList = (ListView) root.findViewById(R.id.wine_list);
-		 
-		 mList.setAdapter (new ArrayAdapter<Wine>(
-				 getActivity(),
-				 android.R.layout.simple_spinner_dropdown_item,
-				 Winehouse.getInstance().cloneWineList()));
-		 
-		 mList.setOnItemClickListener(new OnItemClickListener() {
+		super.onCreateView(inflater, container, savedInstanceState);
+
+		View root = inflater.inflate(R.layout.fragment_wine_list, container,
+				false);
+
+		mList = (ListView) root.findViewById(R.id.wine_list);
+
+		mList.setAdapter(new ArrayAdapter<Wine>(getActivity(),
+				android.R.layout.simple_spinner_dropdown_item, Winehouse
+						.getInstance().cloneWineList()));
+
+		mList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//Toast.makeText(getActivity(), "vino "+position,Toast.LENGTH_SHORT).show();
-				
-				Intent wineHouseActivityIntent = new Intent(getActivity(), WinehouseActivity.class);
-				wineHouseActivityIntent.putExtra(WinehouseActivity.SELECT_WINE_INDEX, position);
+				// Toast.makeText(getActivity(),
+				// "vino "+position,Toast.LENGTH_SHORT).show();
+
+				Intent wineHouseActivityIntent = new Intent(getActivity(),
+						WinehouseActivity.class);
+				wineHouseActivityIntent.putExtra(
+						WinehouseActivity.SELECT_WINE_INDEX, position);
 				startActivity(wineHouseActivityIntent);
 			}
-			 
+
 		});
-		 return root;
+		return root;
 	}
 
 }
