@@ -68,7 +68,7 @@ public class WineFragment extends Fragment {
 		notes.setText(mWine.getNotes());
 
 		mWineImage = (ImageView) root.findViewById(R.id.wine_image);
-		mWineImage.setImageResource(mWine.getImage());
+		mWineImage.setImageBitmap (mWine.getBitmap());
 		if (savedInstanceState != null) {
 			if (savedInstanceState.containsKey(CURRENT_STYLE_TYPE)) {
 				mWineImage.setScaleType((ScaleType) savedInstanceState
