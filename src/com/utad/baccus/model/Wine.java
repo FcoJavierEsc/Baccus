@@ -28,9 +28,10 @@ public class Wine implements Serializable {
 	private int mRating;
 	private String mNotes;
 	private String mImageURL;
+	private String mId;
 
 	public Wine(String name, String type, String uRL, String winehouse,
-			int image, int rating, String notes, String ImageURL) {
+			int image, int rating, String notes, String ImageURL,String id) {
 		super();
 		mName = name;
 		mType = type;
@@ -41,6 +42,15 @@ public class Wine implements Serializable {
 		mNotes = notes;
 		mGrapes = new LinkedList<String>();
 		mImageURL = ImageURL;
+		mId = id;
+	}
+
+	public String getId() {
+		return mId;
+	}
+
+	public void setId(String id) {
+		mId = id;
 	}
 
 	public void addGrape(String grape) {
@@ -78,7 +88,7 @@ public class Wine implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
+
 		return getName();
 	}
 

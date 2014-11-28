@@ -83,7 +83,8 @@ public class Winehouse {
 							jsonWine.getString("company"), R.drawable.vegaval,
 							jsonWine.getInt("rating"),
 							jsonWine.getString("notes"),
-							jsonWine.getString("picture"));
+							jsonWine.getString("picture"),
+							jsonWine.getString("_id"));
 
 					JSONArray nuevo = jsonWine.getJSONArray("grapes");
 					for (int j = 0; j < nuevo.length(); j++) {
