@@ -100,11 +100,11 @@ public class WineHouseFragment extends Fragment {
 				showWine(actIndex + 1);			
 			return true;
 			
-		case android.R.id.home:
-			getActivity().finish();
+		case R.id.action_before:
+			if (actIndex>0)
+				showWine(actIndex-1);
 			return true;
 			
-		
 		default:
 			return super.onOptionsItemSelected(item);
 		}

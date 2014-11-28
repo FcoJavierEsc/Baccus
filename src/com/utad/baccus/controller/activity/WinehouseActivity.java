@@ -24,13 +24,12 @@ public class WinehouseActivity extends ActionBarActivity {
 		FragmentManager manager = getSupportFragmentManager();
 
 		if (manager.findFragmentById(rId) == null) {
-			
-			
+
 			WineHouseFragment fragment = new WineHouseFragment();
 			Bundle arguments = new Bundle();
 			arguments.putSerializable(WineHouseFragment.SELECT_WINE_INDEX,
 					getIntent().getIntExtra(SELECT_WINE_INDEX, 0));
-			
+
 			fragment.setArguments(arguments);
 
 			manager.beginTransaction().add(rId, fragment).commit();
@@ -40,11 +39,12 @@ public class WinehouseActivity extends ActionBarActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-	if (item.getItemId()==R.id.action_before){
-		finish();
-		return true;
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+
 	}
-	return super.onOptionsItemSelected(item);
-	}
-	
+
 }
