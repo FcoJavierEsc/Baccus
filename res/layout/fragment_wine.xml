@@ -17,16 +17,29 @@
         android:orientation="horizontal"
         android:paddingBottom="10dp" >
 
-        <ImageView
-            android:id="@+id/wine_image"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
+             android:layout_weight="1.5"
+             android:paddingRight="10dp"
+             >
+        <ImageView
+            android:id="@+id/wine_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        
             android:contentDescription="@string/wine_description"
             android:paddingRight="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/vegaval" />
-	
+	 <ProgressBar
+	     android:id="@+id/loading"
+	     android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+	     style="?android:attr/progressBarStyleLarge"/>
+	 </FrameLayout>
+	 
         <LinearLayout 
             android:orientation="vertical"
             android:layout_width="0dp"

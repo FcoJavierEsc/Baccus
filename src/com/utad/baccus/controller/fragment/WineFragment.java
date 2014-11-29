@@ -5,7 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,7 +56,7 @@ public class WineFragment extends Fragment {
 			mTypeScale = SettingsFragment.OPTION_NORMAL;
 		}
 
-		View root = inflater.inflate(R.layout.fragment_wine, container, false);
+		final View root = inflater.inflate(R.layout.fragment_wine, container, false);
 
 		mWine = (Wine) getArguments().getSerializable(ARGS_WINE);
 
@@ -69,23 +72,52 @@ public class WineFragment extends Fragment {
 		TextView notes = (TextView) root.findViewById(R.id.wine_notes);
 		notes.setText(mWine.getNotes());
 		mWineImage = (ImageView) root.findViewById(R.id.wine_image);
-		
-		
-		/*Preferencias de la visualizacion de la imagen*/
-				
+
+		/* Preferencias de la visualizacion de la imagen */
+
 		mWineImage = (ImageView) root.findViewById(R.id.wine_image);
-		mWineImage.setImageBitmap (mWine.getBitmap(getActivity()));
+		mWineImage.setVisibility(View.INVISIBLE);
+
+		final Handler downloadImageHandler = new Handler() {
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+				mWineImage.setImageBitmap((Bitmap) msg.obj);
+				mWineImage.setVisibility(View.VISIBLE);
+				root.findViewById(R.id.loading).setVisibility(View.GONE);
+			}
+
+		};
+
+		Thread downloader = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+
+				Message msg = new Message();
+
+				msg.obj = mWine.getBitmap(getActivity());
+				downloadImageHandler.sendMessage(msg);
+
+			}
+		});
+		downloader.start();
 		if (savedInstanceState != null) {
 			if (savedInstanceState.containsKey(CURRENT_STYLE_TYPE)) {
 				mWineImage.setScaleType((ScaleType) savedInstanceState
 						.getSerializable(CURRENT_STYLE_TYPE));
+			} else {
+				SharedPreferences pref = PreferenceManager
+						.getDefaultSharedPreferences(getActivity());
+				ImageView.ScaleType scaleType = ImageView.ScaleType
+						.valueOf(pref.getString(Constans.PREF_SCALE_TYPE,
+								ImageView.ScaleType.FIT_CENTER.toString()));
+
+				mWineImage.setScaleType(scaleType);
 			}
-			else {
-				SharedPreferences pref =PreferenceManager.getDefaultSharedPreferences(getActivity());
-				ImageView.ScaleType scaleType = ImageView.ScaleType.valueOf(pref.getString(Constans.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_CENTER.toString()));
-			
-		mWineImage.setScaleType(scaleType);
-		}
 		}
 		// Vamos a crear los textos de las uvas
 		LinearLayout grapesContainer = (LinearLayout) root
@@ -156,7 +188,8 @@ public class WineFragment extends Fragment {
 		switch (item.getItemId()) {
 		case R.id.action_settings:
 			SettingsFragment dialog = new SettingsFragment();
-			dialog.setTargetFragment(this, SettingsFragment.REQUEST_SELECT_SCALETYPE);
+			dialog.setTargetFragment(this,
+					SettingsFragment.REQUEST_SELECT_SCALETYPE);
 			dialog.show(getFragmentManager(), null);
 			return true;
 		default:
