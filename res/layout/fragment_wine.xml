@@ -45,36 +45,61 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
+	        <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        style="@style/BaccusText.title"
+		        android:text="Vino:" />
+	        
             <TextView
 		        android:id="@+id/wine_name"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
+		        style="@style/BaccusText.Feature"
 		        android:text="wine_name" />
 		
+                   <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        style="@style/BaccusText.title"
+		        android:text="Tipo:" />
+            
 		    <TextView
 		        android:id="@+id/wine_type"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
+		          style="@style/BaccusText.Feature"
 		        android:text="wine_type" />
 		    
+		           <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        style="@style/BaccusText.title"
+		        android:text="Bodega:" />
+            
 		    <TextView
 		        android:id="@+id/winehouse"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
+		          style="@style/BaccusText.Feature"
 		        android:text="winehouse" />
-		    
+		               <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        style="@style/BaccusText.title"
+		        android:text="Valoración:" />
 		    <LinearLayout
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:gravity="center"
 		        android:orientation="horizontal" >
-
+           
 		        <RatingBar
 			        android:id="@+id/rating"
 			        android:numStars="5"
 			        android:stepSize="1"
 			        android:isIndicator="true"
-			        style="?android:attr/ratingBarStyleSmall"
+			        style="@style/WineRatingBar"
 			        android:layout_width="wrap_content" 
 			        android:layout_height="wrap_content"
 			        />
@@ -92,14 +117,15 @@
 		    <TextView
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
+		          style="@style/BaccusText.title"
 		        android:text="@string/grapes_list_header"
-		        android:textStyle="bold" />
+		        />
 
 		    <LinearLayout
 			    android:id="@+id/grapes"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
+			      style="@style/BaccusText.Feature"
 			    android:orientation="vertical" >
 		
 			</LinearLayout>
@@ -116,7 +142,7 @@
 	        android:id="@+id/wine_notes"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:textColor="@android:color/white"
+	          style="@style/BaccusText"
 	        android:text="wine_notes" />
 	</ScrollView>
 
