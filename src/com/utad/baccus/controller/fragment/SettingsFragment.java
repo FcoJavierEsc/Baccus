@@ -6,12 +6,16 @@ import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.utad.baccus.R;
+import com.utad.baccus.model.Constans;
 
 public class SettingsFragment extends DialogFragment implements
 		android.content.DialogInterface.OnClickListener {
@@ -37,6 +41,19 @@ public class SettingsFragment extends DialogFragment implements
 		dialog.setNegativeButton(android.R.string.cancel, this);
 		dialog.setTitle(R.string.action_settings);
 		dialog.setView(mRoot);
+		
+		
+		SharedPreferences pref =PreferenceManager.getDefaultSharedPreferences(getActivity());
+		ImageView.ScaleType scaleType = ImageView.ScaleType.valueOf(pref.getString(Constans.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_CENTER.toString()));
+	
+		
+		RadioGroup radios = (RadioGroup) mRoot.findViewById(R.id.radio_options);
+		if (scaleType.equals(ImageView.ScaleType.FIT_CENTER)){
+			radios.check(R.id.radio_normal);
+		}
+		else{
+			radios.check(R.id.radio_fit);
+		}
 		return dialog.create();
 	}
 
@@ -64,9 +81,15 @@ public class SettingsFragment extends DialogFragment implements
 		Intent intent = new Intent();
 		RadioGroup mRadios = (RadioGroup) mRoot
 				.findViewById(R.id.radio_options);
+		
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		if (mRadios.getCheckedRadioButtonId() == R.id.radio_normal) {
 			intent.putExtra(OPTION_SELECTED, OPTION_NORMAL);
+			pref.edit().putString(Constans.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_CENTER.toString()).commit();
+						
 		} else {
+			pref.edit().putString(Constans.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_XY.toString()).commit();
+
 			intent.putExtra(OPTION_SELECTED, OPTION_FIT);
 		}
 

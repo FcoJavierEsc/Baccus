@@ -1,12 +1,14 @@
 package com.utad.baccus.controller.fragment;
 
-import java.io.ObjectInputStream.GetField;
-
+import android.support.v4.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -34,19 +36,23 @@ public class WineHouseFragment extends Fragment {
 	private MenuItem befItem;
 	private MenuItem nextItem;
 
-	protected void updateActionBarAndSaveLastWine(int index){
-		
-		mActionBar.setSubtitle(mAdapter.getPageTitle(index));
-		mActionBar.setIcon(mAdapter.getImageResource(index));
-		saveLastWine();
+	protected void updateActionBarAndSaveLastWine(int index) {
+		if (mAdapter != null) {
+			mActionBar.setSubtitle(mAdapter.getPageTitle(index));
+			mActionBar.setIcon(mAdapter.getImageResource(index));
+			saveLastWine();
+		}
 	}
 
 	private void saveLastWine() {
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		
-		pref.edit().putInt(Constans.PREF_LAST_WINE, mViewPager.getCurrentItem()).commit();
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+
+		pref.edit()
+				.putInt(Constans.PREF_LAST_WINE, mViewPager.getCurrentItem())
+				.commit();
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -58,15 +64,64 @@ public class WineHouseFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		View root = inflater.inflate(R.layout.activity_winehouse, container, false);
+		View root = inflater.inflate(R.layout.activity_winehouse, container,
+				false);
 		mViewPager = (ViewPager) root.findViewById(R.id.pager);
-		mAdapter = new WineFragmentAdapter(getFragmentManager());
-		mViewPager.setAdapter(mAdapter);
-		mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+
+		// bloqueante
+  
+		AsyncTask <FragmentManager, Void, WineFragmentAdapter> asinc =  new AsyncTask <FragmentManager, Void, WineFragmentAdapter>() {
+			
+			private ProgressDialog proDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				proDialog = new ProgressDialog(getActivity());
+				proDialog.setTitle("Descargando");
+				proDialog.setIndeterminate(true);
+				proDialog.setCancelable(false);
+				proDialog.show();
+			}
+
+			@Override
+			protected WineFragmentAdapter doInBackground(
+					FragmentManager... params) {
+				// TODO Auto-generated method stub
+				return new WineFragmentAdapter(params[0]);
+			}
+
+			@Override
+			protected void onPostExecute(WineFragmentAdapter result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				mAdapter= result;
+				mViewPager.setAdapter(mAdapter);
+				
+				int position = getArguments().getInt(SELECT_WINE_INDEX, 0);
+				
+//				Toast.makeText(getActivity(), "vino " + position, Toast.LENGTH_SHORT)
+//						.show();
+				showWine(position);
+				
+				
+				proDialog.dismiss();
+			}
+			
+		};
 		
+		asinc.execute(getFragmentManager());
+		
+		
+		
+		// Bloqueante
+
+		// sustituida mViewPager.setAdapter(mAdapter);
+
+		mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
@@ -75,24 +130,25 @@ public class WineHouseFragment extends Fragment {
 			}
 
 			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {}
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+			}
 
 			@Override
-			public void onPageScrollStateChanged(int arg0) {}
+			public void onPageScrollStateChanged(int arg0) {
+			}
 		});
+
 		
-		int position =getArguments().getInt(SELECT_WINE_INDEX, 0);
-		Toast.makeText(getActivity(), "vino "+position,Toast.LENGTH_SHORT).show();
-        showWine(position);
 		return root;
 
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
 		super.onCreateOptionsMenu(menu, inflater);
 
+		if (mAdapter!=null){
 		inflater.inflate(R.menu.nextbefore, menu);
 		befItem = menu.findItem(R.id.action_before);
 		nextItem = menu.findItem(R.id.action_next);
@@ -101,9 +157,10 @@ public class WineHouseFragment extends Fragment {
 		befItem.setEnabled(index > 0);
 		nextItem.setEnabled(index < mAdapter.getCount() - 1);
 
-		MenuItemCompat.setShowAsAction(nextItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
+		MenuItemCompat
+				.setShowAsAction(nextItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		MenuItemCompat.setShowAsAction(befItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
-
+		}
 	}
 
 	@Override
@@ -113,15 +170,15 @@ public class WineHouseFragment extends Fragment {
 
 		switch (item.getItemId()) {
 		case R.id.action_next:
-			if (actIndex + 1 < mAdapter.getCount()) 
-				showWine(actIndex + 1);			
+			if (actIndex + 1 < mAdapter.getCount())
+				showWine(actIndex + 1);
 			return true;
-			
+
 		case R.id.action_before:
-			if (actIndex>0)
-				showWine(actIndex-1);
+			if (actIndex > 0)
+				showWine(actIndex - 1);
 			return true;
-			
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}

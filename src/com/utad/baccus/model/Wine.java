@@ -1,5 +1,7 @@
 package com.utad.baccus.model;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -7,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -30,8 +33,8 @@ public class Wine implements Serializable {
 	private String mImageURL;
 	private String mId;
 
-	public Wine(String name, String type, String uRL, String winehouse,
-			int image, int rating, String notes, String ImageURL,String id) {
+	public Wine(String id,String name, String type, String uRL, String winehouse,
+			int image, int rating, String notes, String ImageURL) {
 		super();
 		mName = name;
 		mType = type;
@@ -57,22 +60,39 @@ public class Wine implements Serializable {
 		mGrapes.add(grape);
 	}
 
-	public Bitmap getBitmap() {
-		return getBitmapFromURL(mImageURL);
+	public Bitmap getBitmap(Context context) {
+		return getBitmapFromURL(context,mImageURL);
 	}
 
-	@SuppressLint("NewApi") public Bitmap getBitmapFromURL(String url) {
+	@SuppressLint("NewApi") 
+	
+	public Bitmap getBitmapFromURL(Context context, String url) {
+		
+		File imageFile = new File(context.getCacheDir(),getId());
+		
+		if (imageFile.exists()){
+			return BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+			
+		}
+		
+		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		
 		InputStream in = null;
 
 		try {
 			in = new java.net.URL(url).openStream();
-			return BitmapFactory.decodeStream(in);
+			Bitmap bmp = BitmapFactory.decodeStream(in);
+			FileOutputStream fos = new FileOutputStream(imageFile);
+			bmp.compress(Bitmap.CompressFormat.PNG, 90, fos);
+			fos.close();
+			Log.v("AQUI","Hemos salvado ");
+			return bmp;
 		} catch (Exception ex) {
 			Log.e("Baccus", "ERROR downloading image", ex);
 			return null;
@@ -151,5 +171,6 @@ public class Wine implements Serializable {
 	public void setNotes(String notes) {
 		mNotes = notes;
 	}
-
+	
+	
 }

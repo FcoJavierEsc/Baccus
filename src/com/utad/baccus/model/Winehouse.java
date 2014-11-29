@@ -77,14 +77,14 @@ public class Winehouse {
 				JSONObject jsonWine = jsonRoot.getJSONObject(i);
 
 				if (jsonWine.has("name")) {
-					Wine wine = new Wine(jsonWine.getString("name"),
+					Wine wine = new Wine(jsonWine.getString("_id"),
+							jsonWine.getString("name"),
 							jsonWine.getString("type"),
 							jsonWine.getString("wine_web"),
 							jsonWine.getString("company"), R.drawable.vegaval,
 							jsonWine.getInt("rating"),
 							jsonWine.getString("notes"),
-							jsonWine.getString("picture"),
-							jsonWine.getString("_id"));
+							jsonWine.getString("picture"));
 
 					JSONArray nuevo = jsonWine.getJSONArray("grapes");
 					for (int j = 0; j < nuevo.length(); j++) {

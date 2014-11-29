@@ -1,5 +1,9 @@
 package com.utad.baccus.controller.fragment;
 
+import java.util.List;
+
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,11 +38,47 @@ public class WineListFragment extends Fragment  {
 		View root = inflater.inflate(R.layout.fragment_wine_list, container,
 				false);
 
-		mList = (ListView) root.findViewById(R.id.wine_list);
+		
 
-		mList.setAdapter(new ArrayAdapter<Wine>(getActivity(),
-				android.R.layout.simple_spinner_dropdown_item, Winehouse
-						.getInstance().cloneWineList()));
+		mList = (ListView) root.findViewById(R.id.wine_list);
+		
+		AsyncTask<Void, Void, List<Wine>>  asyncTask = new AsyncTask<Void, Void , List<Wine>>(){
+
+			private ProgressDialog proDialog = null;
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				proDialog = new ProgressDialog(getActivity());
+				proDialog.setTitle("Descargando");
+				proDialog.setIndeterminate(true);
+				proDialog.setCancelable(false);
+				proDialog.show();
+			
+			}
+			
+			
+			@Override
+			protected List<Wine> doInBackground(Void... params) {
+				//bloqueante
+				Winehouse winehouse = Winehouse.getInstance();
+				return winehouse.cloneWineList();
+			}
+            //se ejecuta en el hilo principal
+			@Override
+			protected void onPostExecute(List<Wine> result) {
+
+				super.onPostExecute(result);
+				proDialog.dismiss();
+				mList.setAdapter(new ArrayAdapter<Wine>(getActivity(),
+						android.R.layout.simple_spinner_dropdown_item, Winehouse
+								.getInstance().cloneWineList()));
+				
+			}
+			
+			
+		};
+
+		asyncTask.execute();
 
 		mList.setOnItemClickListener(new OnItemClickListener() {
 
