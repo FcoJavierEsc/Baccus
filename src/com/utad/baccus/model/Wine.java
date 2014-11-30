@@ -33,8 +33,9 @@ public class Wine implements Serializable {
 	private String mImageURL;
 	private String mId;
 
-	public Wine(String id,String name, String type, String uRL, String winehouse,
-			int image, int rating, String notes, String ImageURL) {
+	public Wine(String id, String name, String type, String uRL,
+			String winehouse, int image, int rating, String notes,
+			String ImageURL) {
 		super();
 		mName = name;
 		mType = type;
@@ -61,28 +62,18 @@ public class Wine implements Serializable {
 	}
 
 	public Bitmap getBitmap(Context context) {
-		return getBitmapFromURL(context,mImageURL);
+		return getBitmapFromURL(context, mImageURL);
 	}
 
-	@SuppressLint("NewApi") 
-	
 	public Bitmap getBitmapFromURL(Context context, String url) {
-		
-		File imageFile = new File(context.getCacheDir(),getId());
-		
-		if (imageFile.exists()){
-			return BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-			
-		}
-		
-		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-					.permitAll().build();
-			StrictMode.setThreadPolicy(policy);
+		File imageFile = new File(context.getCacheDir(), getId());
+
+		if (imageFile.exists()) {
+			return BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+
 		}
-		
+
 		InputStream in = null;
 
 		try {
@@ -91,7 +82,7 @@ public class Wine implements Serializable {
 			FileOutputStream fos = new FileOutputStream(imageFile);
 			bmp.compress(Bitmap.CompressFormat.PNG, 90, fos);
 			fos.close();
-			Log.v("AQUI","Hemos salvado ");
+			Log.v("AQUI", "Hemos salvado ");
 			return bmp;
 		} catch (Exception ex) {
 			Log.e("Baccus", "ERROR downloading image", ex);
@@ -171,6 +162,5 @@ public class Wine implements Serializable {
 	public void setNotes(String notes) {
 		mNotes = notes;
 	}
-	
-	
+
 }

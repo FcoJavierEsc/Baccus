@@ -5,14 +5,26 @@
     tools:context="com.utad.baccus.MainActivity" >
 
     <item
-        android:id="@+id/action_before"
+        android:id="@+id/action_first"
         android:orderInCategory="102"
-        android:title="@string/action_settings_before"
+        android:title="@string/action_settings_first"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/action_next"
+        android:id="@+id/action_before"
         android:orderInCategory="103"
+        android:title="@string/action_settings_before"
+        app:showAsAction="never"/>
+    
+    <item
+        android:id="@+id/action_next"
+        android:orderInCategory="104"
         android:title="@string/action_settings_next"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_last"
+        android:orderInCategory="105"
+        android:title="@string/action_settings_last"
+        app:showAsAction="never"/>
+    
 
 </menu>

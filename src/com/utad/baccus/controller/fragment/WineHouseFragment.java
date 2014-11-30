@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -20,8 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.utad.baccus.R;
 import com.utad.baccus.controller.adapter.WineFragmentAdapter;
 import com.utad.baccus.model.Constans;
@@ -33,8 +30,10 @@ public class WineHouseFragment extends Fragment {
 	private ActionBar mActionBar = null;
 
 	private ViewPager mViewPager = null;
-	private MenuItem befItem;
-	private MenuItem nextItem;
+	private MenuItem mFirstItem;
+	private MenuItem mBefItem;
+	private MenuItem mNextItem;
+	private MenuItem mLastItem;
 
 	protected void updateActionBarAndSaveLastWine(int index) {
 		if (mAdapter != null) {
@@ -71,11 +70,11 @@ public class WineHouseFragment extends Fragment {
 		mViewPager = (ViewPager) root.findViewById(R.id.pager);
 
 		// bloqueante
-  
-		AsyncTask <FragmentManager, Void, WineFragmentAdapter> asinc =  new AsyncTask <FragmentManager, Void, WineFragmentAdapter>() {
-			
+
+		AsyncTask<FragmentManager, Void, WineFragmentAdapter> asinc = new AsyncTask<FragmentManager, Void, WineFragmentAdapter>() {
+
 			private ProgressDialog proDialog = null;
-			
+
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -97,25 +96,23 @@ public class WineHouseFragment extends Fragment {
 			protected void onPostExecute(WineFragmentAdapter result) {
 				// TODO Auto-generated method stub
 				super.onPostExecute(result);
-				mAdapter= result;
+				mAdapter = result;
 				mViewPager.setAdapter(mAdapter);
-				
+
 				int position = getArguments().getInt(SELECT_WINE_INDEX, 0);
-				
-//				Toast.makeText(getActivity(), "vino " + position, Toast.LENGTH_SHORT)
-//						.show();
+
+				// Toast.makeText(getActivity(), "vino " + position,
+				// Toast.LENGTH_SHORT)
+				// .show();
 				showWine(position);
-				
-				
+
 				proDialog.dismiss();
 			}
-			
+
 		};
-		
+
 		asinc.execute(getFragmentManager());
-		
-		
-		
+
 		// Bloqueante
 
 		// sustituida mViewPager.setAdapter(mAdapter);
@@ -138,7 +135,6 @@ public class WineHouseFragment extends Fragment {
 			}
 		});
 
-		
 		return root;
 
 	}
@@ -148,18 +144,27 @@ public class WineHouseFragment extends Fragment {
 
 		super.onCreateOptionsMenu(menu, inflater);
 
-		if (mAdapter!=null){
-		inflater.inflate(R.menu.nextbefore, menu);
-		befItem = menu.findItem(R.id.action_before);
-		nextItem = menu.findItem(R.id.action_next);
-		int index = mViewPager.getCurrentItem();
+		if (mAdapter != null) {
+			inflater.inflate(R.menu.nextbefore, menu);
+			mFirstItem = menu.findItem(R.id.action_first);
+			mBefItem = menu.findItem(R.id.action_before);
+			mNextItem = menu.findItem(R.id.action_next);
+			mLastItem = menu.findItem(R.id.action_last);
+			int index = mViewPager.getCurrentItem();
 
-		befItem.setEnabled(index > 0);
-		nextItem.setEnabled(index < mAdapter.getCount() - 1);
+			mFirstItem.setEnabled(index != 0);
+			mBefItem.setEnabled(index > 0);
+			mNextItem.setEnabled(index < mAdapter.getCount() - 1);
+			mLastItem.setEnabled(index != mAdapter.getCount() - 1);
 
-		MenuItemCompat
-				.setShowAsAction(nextItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
-		MenuItemCompat.setShowAsAction(befItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
+			MenuItemCompat.setShowAsAction(mFirstItem,
+					MenuItem.SHOW_AS_ACTION_ALWAYS);
+			MenuItemCompat.setShowAsAction(mBefItem,
+					MenuItem.SHOW_AS_ACTION_ALWAYS);
+			MenuItemCompat.setShowAsAction(mNextItem,
+					MenuItem.SHOW_AS_ACTION_ALWAYS);
+			MenuItemCompat.setShowAsAction(mLastItem,
+					MenuItem.SHOW_AS_ACTION_ALWAYS);
 		}
 	}
 
@@ -169,14 +174,19 @@ public class WineHouseFragment extends Fragment {
 		int actIndex = mViewPager.getCurrentItem();
 
 		switch (item.getItemId()) {
+		case R.id.action_first:
+					showWine(0);
+			return true;
+		case R.id.action_before:
+			if (actIndex > 0)
+				showWine(actIndex - 1);
+			return true;
 		case R.id.action_next:
 			if (actIndex + 1 < mAdapter.getCount())
 				showWine(actIndex + 1);
 			return true;
-
-		case R.id.action_before:
-			if (actIndex > 0)
-				showWine(actIndex - 1);
+		case R.id.action_last:
+			showWine(mAdapter.getCount()-1);
 			return true;
 
 		default:

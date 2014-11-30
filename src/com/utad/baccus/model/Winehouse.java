@@ -45,19 +45,14 @@ public class Winehouse {
 	/**
 	 * Constructor de la bodega
 	 */
-	@SuppressLint("NewApi")
+	
 	private Winehouse() {
 		// Creamos los modelos
 
 		mWines = new LinkedList<Wine>();
 
 		try {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-
-				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-						.permitAll().build();
-				StrictMode.setThreadPolicy(policy);
-			}
+			
 
 			URLConnection conn = new URL(WINES_URL).openConnection();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(

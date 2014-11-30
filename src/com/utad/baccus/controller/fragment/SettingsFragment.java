@@ -30,8 +30,6 @@ public class SettingsFragment extends DialogFragment implements
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		int defecto;
-
 		super.onCreateDialog(savedInstanceState);
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());

@@ -48,7 +48,7 @@
 	        <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        style="@style/BaccusText.title"
+		        style="@style/BaccusText.Title"
 		        android:text="Vino:" />
 	        
             <TextView
@@ -61,7 +61,7 @@
                    <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        style="@style/BaccusText.title"
+		        style="@style/BaccusText.Title"
 		        android:text="Tipo:" />
             
 		    <TextView
@@ -74,7 +74,7 @@
 		           <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        style="@style/BaccusText.title"
+		        style="@style/BaccusText.Title"
 		        android:text="Bodega:" />
             
 		    <TextView
@@ -86,7 +86,7 @@
 		               <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        style="@style/BaccusText.title"
+		        style="@style/BaccusText.Title"
 		        android:text="Valoración:" />
 		    <LinearLayout
 		        android:layout_width="match_parent"
@@ -117,7 +117,7 @@
 		    <TextView
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		          style="@style/BaccusText.title"
+		          style="@style/BaccusText.Title"
 		        android:text="@string/grapes_list_header"
 		        />
 
