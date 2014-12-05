@@ -38,17 +38,20 @@ public class WineListActivity extends ActionBarActivity implements
 			}
 			wineListFragment.setOnWineSelectedListener(this);
 		}
-		
+
 		if (findViewById(R.id.winehouse_fragment) != null) {
 			if (manager.findFragmentById(R.id.winehouse_fragment) == null) {
 				WineHouseFragment fragment = new WineHouseFragment();
 				Bundle args = new Bundle();
-				
-				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-				args.putInt(WineHouseFragment.SELECT_WINE_INDEX, pref.getInt(Constans.PREF_LAST_WINE, 0));
+
+				SharedPreferences pref = PreferenceManager
+						.getDefaultSharedPreferences(this);
+				args.putInt(WineHouseFragment.SELECT_WINE_INDEX,
+						pref.getInt(Constans.PREF_LAST_WINE, 0));
 				fragment.setArguments(args);
 				manager.beginTransaction()
-						.add(R.id.winehouse_fragment, fragment).commit();
+						.add(R.id.winehouse_fragment, fragment)
+						.commit();
 
 			}
 

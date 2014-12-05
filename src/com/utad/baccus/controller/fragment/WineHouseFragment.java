@@ -31,8 +31,8 @@ public class WineHouseFragment extends Fragment {
 
 	private ViewPager mViewPager = null;
 	private MenuItem mFirstItem;
-	private MenuItem mBefItem;
-	private MenuItem mNextItem;
+//	private MenuItem mBefItem;
+//	private MenuItem mNextItem;
 	private MenuItem mLastItem;
 
 	protected void updateActionBarAndSaveLastWine(int index) {
@@ -147,22 +147,22 @@ public class WineHouseFragment extends Fragment {
 		if (mAdapter != null) {
 			inflater.inflate(R.menu.nextbefore, menu);
 			mFirstItem = menu.findItem(R.id.action_first);
-			mBefItem = menu.findItem(R.id.action_before);
-			mNextItem = menu.findItem(R.id.action_next);
+//			mBefItem = menu.findItem(R.id.action_before);
+//			mNextItem = menu.findItem(R.id.action_next);
 			mLastItem = menu.findItem(R.id.action_last);
 			int index = mViewPager.getCurrentItem();
 
 			mFirstItem.setEnabled(index != 0);
-			mBefItem.setEnabled(index > 0);
-			mNextItem.setEnabled(index < mAdapter.getCount() - 1);
+//			mBefItem.setEnabled(index > 0);
+//			mNextItem.setEnabled(index < mAdapter.getCount() - 1);
 			mLastItem.setEnabled(index != mAdapter.getCount() - 1);
 
 			MenuItemCompat.setShowAsAction(mFirstItem,
 					MenuItem.SHOW_AS_ACTION_ALWAYS);
-			MenuItemCompat.setShowAsAction(mBefItem,
-					MenuItem.SHOW_AS_ACTION_ALWAYS);
-			MenuItemCompat.setShowAsAction(mNextItem,
-					MenuItem.SHOW_AS_ACTION_ALWAYS);
+//			MenuItemCompat.setShowAsAction(mBefItem,
+//					MenuItem.SHOW_AS_ACTION_ALWAYS);
+//			MenuItemCompat.setShowAsAction(mNextItem,
+//					MenuItem.SHOW_AS_ACTION_ALWAYS);
 			MenuItemCompat.setShowAsAction(mLastItem,
 					MenuItem.SHOW_AS_ACTION_ALWAYS);
 		}
