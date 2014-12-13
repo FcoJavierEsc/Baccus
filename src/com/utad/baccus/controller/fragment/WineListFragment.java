@@ -2,6 +2,7 @@ package com.utad.baccus.controller.fragment;
 
 import java.util.List;
 
+import android.R.animator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -117,6 +120,9 @@ public class WineListFragment extends Fragment {
 					if (wineImage != null) {
 						wineImage.setImageBitmap((Bitmap) msg.obj);
 						wineImage.setVisibility(View.VISIBLE);
+						//Animation
+						Animation loadAnim= AnimationUtils.loadAnimation(getContext(), R.anim.image_loader);
+						wineImage.startAnimation(loadAnim);
 						wineRow.findViewById(R.id.loading).setVisibility(
 								View.GONE);
 					}
